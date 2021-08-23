@@ -58,6 +58,29 @@ main {
   }
 }
 
+// Menu
+.card-img-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+
+  & .card-title {
+    background: #000;
+
+    & > h3 {
+      color: #fff;
+      line-height: 1;
+      margin: 0.5rem 1rem;
+    }
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
 // Footer
 .footer-link {
   color: #fff;
