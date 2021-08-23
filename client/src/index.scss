@@ -29,3 +29,42 @@ body {
   font-family: var(--ff-primary);
   font-weight: 300;
 }
+
+main {
+  min-height: 85vh;
+}
+
+// Utilities
+.wrapper {
+  width: calc(min(90vw, 70rem));
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
+// Navbar
+.navbar-brand {
+  font-family: var(--ff-header);
+  font-weight: 100;
+  letter-spacing: 5px;
+}
+
+.navbar-link {
+  color: #999 !important;
+
+  &:hover {
+    color: #fff !important;
+  }
+}
+
+// Footer
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
