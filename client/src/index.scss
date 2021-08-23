@@ -1,0 +1,31 @@
+:root {
+  --ff-primary: 'Lato', sans-serif;
+  --ff-header: 'Montserrat', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ff-header);
+  font-weight: 100;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+}
