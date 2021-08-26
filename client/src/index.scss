@@ -1,5 +1,6 @@
 :root {
   --ff-primary: 'Lato', sans-serif;
+  --ff-secondary: 'Roboto', sans-serif;
   --ff-header: 'Montserrat', sans-serif;
 }
 
@@ -78,6 +79,37 @@ main {
 
   &:hover {
     background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Product
+.product {
+  border-color: #fff;
+  transition: all 250ms ease;
+
+  &:hover {
+    border-color: #3a3a3a;
+  }
+
+  &.card {
+    margin: 10px 0;
+  }
+
+  & .card-body {
+    height: 6.5rem;
+  }
+
+  &-title > h5 {
+    font-family: var(--ff-secondary);
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+  }
+
+  .card-text > p {
+    font-family: var(--ff-secondary);
+    font-size: 1rem;
+    letter-spacing: 0;
+    margin: 0 !important;
   }
 }
 
