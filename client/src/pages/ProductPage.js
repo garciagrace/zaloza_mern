@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
 
 import Product from '../components/Product';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 
 import { listProductsByCategory } from '../actions/productActions';
 
@@ -13,7 +15,7 @@ const ProductPage = ({ match }) => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productListByCategory);
-  const { products } = productList;
+  const { products, loading, error } = productList;
 
   // Request to the server to fetch data - all products by specific category
   useEffect(() => {
@@ -28,14 +30,20 @@ const ProductPage = ({ match }) => {
         Go Back
       </Link>
 
-      <Row>
-        {/* Filtered product with specific category and map through each filtered product */}
-        {products.map((item) => (
-          <Col key={item._id} sm={12} md={6} lg={3}>
-            <Product product={item} />
-          </Col>
-        ))}
-      </Row>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
+        <Row>
+          {/* Filtered product with specific category and map through each filtered product */}
+          {products.map((item) => (
+            <Col key={item._id} sm={12} md={6} lg={3}>
+              <Product product={item} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };
