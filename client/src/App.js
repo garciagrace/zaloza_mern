@@ -6,15 +6,21 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 
 const App = () => {
   return (
     <Router>
       <Header />
       <main className='py-3'>
-        <Container>
+        <Container className='wrapper'>
           <Route path='/' component={HomePage} exact />
           <Route path='/products/:category/' component={ProductPage} exact />
+          <Route
+            path='/products/:category/:id/'
+            component={ProductDetailsPage}
+            exact
+          />
         </Container>
       </main>
       <Footer />

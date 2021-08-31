@@ -26,6 +26,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   font-family: var(--ff-primary);
   font-weight: 300;
@@ -42,6 +46,10 @@ main {
 
 .ml-auto {
   margin-left: auto !important;
+}
+
+.v-space > * + * {
+  margin-top: 1rem;
 }
 
 // Navbar
@@ -111,6 +119,10 @@ main {
     letter-spacing: 0;
     margin: 0 !important;
   }
+}
+
+.btn-add {
+  width: 100%;
 }
 
 // Footer
