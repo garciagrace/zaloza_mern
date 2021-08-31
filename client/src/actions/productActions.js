@@ -21,3 +21,25 @@ export const listProductsByCategory = (category) => async (dispatch) => {
     });
   }
 };
+
+// Fetch single product by id
+export const listProductDetails = (category, id) => async (dispatch) => {
+  try {
+    dispatch({ type: 'PRODUCT_DETAILS_REQUEST' });
+
+    const { data } = await axios.get(`/api/products/${category}/${id}`);
+
+    dispatch({
+      type: 'PRODUCT_DETAILS_SUCCESS',
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: 'PRODUCT_DETAILS_FAIL',
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
