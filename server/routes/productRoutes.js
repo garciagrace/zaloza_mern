@@ -6,6 +6,6 @@ import {
 } from '../controllers/productController.js';
 
 router.route('/:category/').get(getProductsByCategory);
-router.route('/:id').get(getProductById);
+router.route('/:category/:id').get(getProductById);
 
 export default router;
