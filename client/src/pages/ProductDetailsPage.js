@@ -5,7 +5,7 @@ import {
   Button,
   Card,
   Col,
-  // Form,
+  Form,
   Image,
   ListGroup,
   Row,
@@ -81,11 +81,25 @@ const ProductDetailsPage = ({ match }) => {
                     <p>100% Original Product</p>
                     <p>Select Size</p>
 
-                    {console.log(product.stocks)}
+                    {/* List all size of the specific product */}
+                    {product.stocks !== undefined && (
+                      <Form.Control as='select'>
+                        <option key='0' value=''>
+                          Size
+                        </option>
+                        {product.stocks.map((stock) => (
+                          <option
+                            key={stock._id}
+                            value={stock.size}
+                            disabled={stock.qty === 0}
+                          >
+                            {stock.size}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    )}
 
-                    {/* {product.stocks.foreach((stock) => (
-                      <p>{stock.size}</p>
-                    ))} */}
+                    {/* {product.stocks !== undefined && console.log(productStocks)} */}
 
                     <Button className='btn-add'>Add To Cart</Button>
                   </ListGroup.Item>
