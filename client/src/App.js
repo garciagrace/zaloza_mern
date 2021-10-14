@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import ProductPage from './pages/ProductPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 
@@ -15,6 +16,9 @@ const App = () => {
       <main className='py-3'>
         <Container className='wrapper'>
           <Route path='/' component={HomePage} exact />
+          {/* User */}
+          <Route path='/login' component={LoginPage} />
+          {/* Product */}
           <Route path='/products/:category/' component={ProductPage} exact />
           <Route
             path='/products/:category/:id/'
