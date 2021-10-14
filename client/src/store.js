@@ -6,10 +6,14 @@ import {
   productListByCategoryReducer,
   productDetailsReducer,
 } from './reducers/productReducers';
+import { userLoginReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
+  // Product
   productListByCategory: productListByCategoryReducer,
   productDetails: productDetailsReducer,
+  // User
+  userLogin: userLoginReducer,
 });
 
 const initialState = {};
