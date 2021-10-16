@@ -33,3 +33,9 @@ export const login = (email, password) => async (dispatch) => {
     });
   }
 };
+
+// Logged out user
+export const logout = () => (dispatch) => {
+  dispatch({ type: 'USER_LOGOUT' });
+  document.location.href = '/';
+};
