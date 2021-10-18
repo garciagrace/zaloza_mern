@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import ProductPage from './pages/ProductPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 
@@ -18,6 +19,7 @@ const App = () => {
           <Route path='/' component={HomePage} exact />
           {/* User */}
           <Route path='/login' component={LoginPage} />
+          <Route path='/register' component={RegisterPage} />
           {/* Product */}
           <Route path='/products/:category/' component={ProductPage} exact />
           <Route
