@@ -25,10 +25,11 @@ const userSchema = mongoose.Schema(
       required: true,
     },
     address: {
-      address: { type: String, required: false },
+      houseNo: { type: String, required: false },
+      barangay: { type: String, required: false },
       city: { type: String, required: false },
+      province: { type: String, required: false },
       postalCode: { type: String, required: false },
-      country: { type: String, required: false },
     },
     isAdmin: {
       type: Boolean,
