@@ -141,6 +141,55 @@ select {
   margin-bottom: 1rem;
 }
 
+// Side Nav
+.side-nav {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+
+  & > h5 {
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  & > p {
+    padding: 5px 0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Canvas
+.canvas {
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+
+  &-header {
+    padding: 1rem 2rem;
+    background: #ccc;
+
+    & > h5 {
+      margin: 0;
+    }
+  }
+
+  &-body {
+    padding: 1rem 2rem;
+  }
+
+  &-label {
+    display: flex;
+    margin: 3px 0;
+    & > span {
+      width: 40%;
+    }
+  }
+}
+
 // Footer
 .footer-link {
   color: #fff;

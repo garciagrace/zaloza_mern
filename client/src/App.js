@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProductPage from './pages/ProductPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import ProfilePage from './pages/ProfilePage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           {/* User */}
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
+          <Route path='/account' component={ProfilePage} />
           {/* Product */}
           <Route path='/products/:category/' component={ProductPage} exact />
           <Route
