@@ -10,8 +10,9 @@ import RegisterPage from './pages/RegisterPage';
 import ProductPage from './pages/ProductPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import ProfilePage from './pages/ProfilePage';
+import UpdateProfilePage from './pages/UpdateProfilePage';
 
-const App = () => {
+const App = ({ match }) => {
   return (
     <Router>
       <Header />
@@ -21,7 +22,11 @@ const App = () => {
           {/* User */}
           <Route path='/login' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
-          <Route path='/account' component={ProfilePage} />
+          <Route path='/account' component={ProfilePage} exact />
+          <Route
+            path='/account/update-profile/:params/'
+            component={UpdateProfilePage}
+          />
           {/* Product */}
           <Route path='/products/:category/' component={ProductPage} exact />
           <Route

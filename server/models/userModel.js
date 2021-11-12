@@ -31,6 +31,11 @@ const userSchema = mongoose.Schema(
       province: { type: String, required: false },
       postalCode: { type: String, required: false },
     },
+    isAddressSet: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     isAdmin: {
       type: Boolean,
       required: true,

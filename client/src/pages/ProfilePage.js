@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -19,9 +19,15 @@ const ProfilePage = ({ location, history }) => {
     if (!userInfo) {
       history.push('/login');
     } else {
-      dispatch(getUserDetails('profile'));
+      if (!user || !user.email) {
+        dispatch(getUserDetails('profile'));
+      }
     }
-  }, [history, userInfo, dispatch]);
+  }, [dispatch, history, userInfo, user]);
+
+  const submitHandler = (e) => {
+    history.push(`/account/update-profile/${e.target.value}`);
+  };
 
   return (
     <Row>
@@ -41,7 +47,7 @@ const ProfilePage = ({ location, history }) => {
               </div>
               <div className='canvas-body'>
                 <Row>
-                  <Col md={9}>
+                  <Col md={10}>
                     <p className='canvas-label'>
                       <span>Name:</span> {`${user.firstName} ${user.lastName}`}
                     </p>
@@ -54,6 +60,22 @@ const ProfilePage = ({ location, history }) => {
                     <p className='canvas-label'>
                       <span>Password:</span> ******
                     </p>
+                    <Button
+                      className='btn-light btn-light-sm'
+                      value={'change-password'}
+                      onClick={(e) => submitHandler(e)}
+                    >
+                      Change Password
+                    </Button>
+                  </Col>
+                  <Col md={2}>
+                    <Button
+                      className='btn-light btn-light-sm'
+                      value={'update-info'}
+                      onClick={(e) => submitHandler(e)}
+                    >
+                      Edit Profile
+                    </Button>
                   </Col>
                 </Row>
               </div>
@@ -63,7 +85,29 @@ const ProfilePage = ({ location, history }) => {
               <div className='canvas-header'>
                 <h5>Billing/Shipping Address</h5>
               </div>
-              <div className='canvas-body'></div>
+              <div className='canvas-body'>
+                <Row>
+                  <Col md={5}>
+                    {user.isAddressSet ? (
+                      <Button
+                        className='btn-add'
+                        value={'update-address'}
+                        onClick={(e) => submitHandler(e)}
+                      >
+                        Update Address
+                      </Button>
+                    ) : (
+                      <Button
+                        className='btn-add'
+                        value={'add-address'}
+                        onClick={(e) => submitHandler(e)}
+                      >
+                        Add Address
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              </div>
             </div>
           </>
         )}
