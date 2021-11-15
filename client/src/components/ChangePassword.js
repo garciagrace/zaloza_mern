@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
+
 import { getUserDetails } from '../actions/userActions';
 
 const ChangePassword = ({ history }) => {

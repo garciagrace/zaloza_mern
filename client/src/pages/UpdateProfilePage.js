@@ -7,6 +7,8 @@ import SideNav from '../components/SideNav';
 
 import { getUserDetails } from '../actions/userActions';
 import ChangePassword from '../components/ChangePassword';
+import ChangePofile from '../components/ChangeProfile';
+import ChangeAddress from '../components/ChangeAddress';
 
 const UpdateProfilePage = ({ history, match }) => {
   const toUpdate = match.params.params;
@@ -48,11 +50,11 @@ const UpdateProfilePage = ({ history, match }) => {
                 <Row>
                   <Col md={9}>
                     {toUpdate === 'update-info' ? (
-                      <p>Hey</p>
+                      <ChangePofile />
                     ) : toUpdate === 'change-password' ? (
                       <ChangePassword />
                     ) : (
-                      <p>Hi</p>
+                      <ChangeAddress />
                     )}
                   </Col>
                 </Row>

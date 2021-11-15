@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema(
     },
     address: {
       houseNo: { type: String, required: false },
+      street: { type: String, required: false },
       barangay: { type: String, required: false },
       city: { type: String, required: false },
       province: { type: String, required: false },
