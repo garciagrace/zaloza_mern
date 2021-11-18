@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { getUserDetails } from '../actions/userActions';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getUserDetails('profile'));
+    }
+  }, [dispatch, userInfo]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -37,7 +47,9 @@ const Header = () => {
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown
-                  title={`${userInfo.firstName} ${userInfo.lastName}`}
+                  title={`${user.firstName || 'My Profile'} ${
+                    user.lastName || ''
+                  }`}
                   id='username'
                 >
                   <LinkContainer to='/account'>

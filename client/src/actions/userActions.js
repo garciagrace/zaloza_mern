@@ -23,6 +23,10 @@ export const login = (email, password) => async (dispatch) => {
       type: 'USER_LOGIN_SUCCESS',
       payload: data,
     });
+
+    const token = (({ token }) => ({ token }))(data);
+
+    localStorage.setItem('userInfo', JSON.stringify(token));
   } catch (error) {
     dispatch({
       type: 'USER_LOGIN_FAIL',
@@ -36,7 +40,9 @@ export const login = (email, password) => async (dispatch) => {
 
 // Logged out user
 export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
   dispatch({ type: 'USER_LOGOUT' });
+  dispatch({ type: 'USER_DETAILS_RESET' });
   document.location.href = '/';
 };
 
