@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 const ChangePassword = ({ history }) => {
-  const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [alert, setAlert] = useState('');
 
+  const redirect = useHistory();
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { error, user } = userDetails;
+  const { user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -30,23 +31,26 @@ const ChangePassword = ({ history }) => {
   }, [dispatch, history, userInfo, user]);
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    if (newPassword && confirmPassword) {
+      if (newPassword !== confirmPassword) {
+        setAlert('Passwords do not match');
+      } else if (newPassword.length < 6) {
+        setAlert('Password needs to be 6 characters or more');
+      } else {
+        dispatch(
+          updateUserProfile({ id: user._id, password: confirmPassword })
+        );
+        redirect.push('/account');
+      }
+    } else {
+      setAlert('Fill up all fields');
+    }
   };
 
   return (
     <>
-      {error && <Message variant='danger'>{error}</Message>}
+      {alert && <Message variant='danger'>{alert}</Message>}
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Enter password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
         <Form.Group controlId='newPassword'>
           <Form.Label>New Password</Form.Label>
           <Form.Control
