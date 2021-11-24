@@ -89,13 +89,22 @@ const ProfilePage = ({ location, history }) => {
                 <Row>
                   <Col md={5}>
                     {user.isAddressSet ? (
-                      <Button
-                        className='btn-add'
-                        value={'update-address'}
-                        onClick={(e) => submitHandler(e)}
-                      >
-                        Update Address
-                      </Button>
+                      <>
+                        <div className='address-grp'>
+                          <h6>Complete Address</h6>
+                          <p>{`${user.address.houseNo} ${user.address.street},`}</p>
+                          <p>{`${user.address.barangay}, ${user.address.city},`}</p>
+                          <p>{`${user.address.province} ${user.address.postalCode}`}</p>
+                        </div>
+
+                        <Button
+                          className='btn-add'
+                          value={'update-address'}
+                          onClick={(e) => submitHandler(e)}
+                        >
+                          Update Address
+                        </Button>
+                      </>
                     ) : (
                       <Button
                         className='btn-add'

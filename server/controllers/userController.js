@@ -81,6 +81,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       address: user.address,
       isAdmin: user.isAdmin,
+      isAddressSet: user.isAddressSet,
+      houseNo: user.houseNo,
+      street: user.street,
+      barangay: user.barangay,
+      city: user.city,
+      province: user.province,
+      postalCode: user.postalCode,
     });
   } else {
     res.status(404);
@@ -107,8 +114,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       user.password = req.body.password;
     }
 
+    user.isAddressSet = req.body.isAddressSet;
+
     user.address = {
       houseNo: req.body.houseNo,
+      street: req.body.street,
       barangay: req.body.barangay,
       city: req.body.city,
       province: req.body.province,

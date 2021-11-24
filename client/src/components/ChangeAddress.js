@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 const ChangeAddress = ({ location, history }) => {
   const [houseNo, setHouseNo] = useState('');
@@ -13,41 +13,78 @@ const ChangeAddress = ({ location, history }) => {
   const [city, setCity] = useState('');
   const [province, setProvince] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [alert, setAlert] = useState('');
 
+  const redirect = useHistory();
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { error, user } = userDetails;
+  const { user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     } else {
+      if (success) {
+        dispatch({ type: 'USER_UPDATE_PROFILE_DONE' });
+        dispatch(getUserDetails('profile'));
+        redirect.push('/account');
+      }
+
       if (!user || !user.email) {
         dispatch(getUserDetails('profile'));
+      }
 
-        if (user.isAddressSet) {
-          setHouseNo(user.houseNo);
-          setStreet(user.street);
-          setBarangay(user.barangay);
-          setCity(user.city);
-          setProvince(user.province);
-          setPostalCode(user.postalCode);
-        }
+      if (user.isAddressSet) {
+        setHouseNo(user.address.houseNo);
+        setStreet(user.address.street);
+        setBarangay(user.address.barangay);
+        setCity(user.address.city);
+        setProvince(user.address.province);
+        setPostalCode(user.address.postalCode);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, success, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (houseNo && street && barangay && city && province && postalCode) {
+      const setAddress = {
+        houseNo,
+        street,
+        barangay,
+        city,
+        province,
+        postalCode,
+      };
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          isAddressSet: true,
+          houseNo,
+          street,
+          barangay,
+          city,
+          province,
+          postalCode,
+        })
+      );
+      console.log(setAddress);
+    } else {
+      setAlert('Fill up all fields');
+    }
   };
 
   return (
     <>
-      {error && <Message variant='danger'>{error}</Message>}
+      {alert && <Message variant='danger'>{alert}</Message>}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='houseNo'>
           <Form.Label>House No</Form.Label>
