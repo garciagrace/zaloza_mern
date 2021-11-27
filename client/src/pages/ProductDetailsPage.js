@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -19,6 +19,10 @@ import { numberWithCommas } from '../utilities';
 import { listProductDetails } from '../actions/productActions';
 
 const ProductDetailsPage = ({ match }) => {
+  const [size, setSize] = useState('');
+  const [variant, setVariant] = useState('');
+  const [alert, setAlert] = useState('');
+
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -30,6 +34,18 @@ const ProductDetailsPage = ({ match }) => {
     }
     // eslint-disable-next-line
   }, [dispatch, match]);
+
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+
+    if (size) {
+      setVariant('success');
+      setAlert('Added to cart successfully');
+    } else {
+      setVariant('danger');
+      setAlert('Select size');
+    }
+  };
 
   return (
     <>
@@ -46,6 +62,7 @@ const ProductDetailsPage = ({ match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          {alert && <Message variant={variant}>{alert}</Message>}
           <Row>
             <Col md={4}>
               <Image src={product.image} alt={product.name} fluid />
@@ -83,7 +100,10 @@ const ProductDetailsPage = ({ match }) => {
 
                     {/* List all size of the specific product */}
                     {product.stocks !== undefined && (
-                      <Form.Control as='select'>
+                      <Form.Control
+                        as='select'
+                        onChange={(e) => setSize(e.target.value)}
+                      >
                         <option key='0' value=''>
                           Size
                         </option>
@@ -101,7 +121,12 @@ const ProductDetailsPage = ({ match }) => {
 
                     {/* {product.stocks !== undefined && console.log(productStocks)} */}
 
-                    <Button className='btn-add'>Add To Cart</Button>
+                    <Button
+                      className='btn-add'
+                      onClick={(e) => addToCartHandler(e)}
+                    >
+                      Add To Cart
+                    </Button>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>

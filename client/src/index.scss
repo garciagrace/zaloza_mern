@@ -221,6 +221,9 @@ select {
 // Profile
 .address-grp {
   margin-bottom: 1rem;
+  & > h6 {
+    font-weight: 900 !important;
+  }
 }
 
 // Footer
