@@ -5,15 +5,12 @@ import Cart from '../models/cartModel.js';
 // @route   GET /api/cart/mycart
 // @access  Private
 const getMyCart = asyncHandler(async (req, res) => {
-  const { user } = req.body;
-
-  const cart = await Cart.findOne({ user });
+  const cart = await Cart.findOne({ user: req.user._id });
 
   if (cart) {
-    res.json(cart);
+    res.json(cart.cartItems);
   } else {
-    res.status(404);
-    throw new Error('Cart not found');
+    res.json([]);
   }
 });
 
