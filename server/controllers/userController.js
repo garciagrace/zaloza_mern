@@ -114,7 +114,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       user.password = req.body.password;
     }
 
-    user.isAddressSet = req.body.isAddressSet;
+    user.isAddressSet = req.body.isAddressSet || user.isAddressSet;
 
     user.address = {
       houseNo: req.body.houseNo,
