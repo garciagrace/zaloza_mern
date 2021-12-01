@@ -56,14 +56,6 @@ const ChangeAddress = ({ location, history }) => {
     e.preventDefault();
 
     if (houseNo && street && barangay && city && province && postalCode) {
-      const setAddress = {
-        houseNo,
-        street,
-        barangay,
-        city,
-        province,
-        postalCode,
-      };
       dispatch(
         updateUserProfile({
           id: user._id,
@@ -76,7 +68,6 @@ const ChangeAddress = ({ location, history }) => {
           postalCode,
         })
       );
-      console.log(setAddress);
     } else {
       setAlert('Fill up all fields');
     }

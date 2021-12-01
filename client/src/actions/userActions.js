@@ -48,7 +48,7 @@ export const logout = () => (dispatch) => {
 
 // Register user
 export const register =
-  (firstName, lastName, contactNum, email, password) => async (dispatch) => {
+  (firstName, lastName, email, password) => async (dispatch) => {
     try {
       dispatch({
         type: 'USER_REGISTER_REQUEST',
@@ -62,9 +62,17 @@ export const register =
 
       const { data } = await axios.post(
         '/api/users',
-        { firstName, lastName, contactNum, email, password },
+        { firstName, lastName, email, password },
         config
       );
+
+      const auth = {
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      };
+
+      await axios.post('/api/carts', { user: data._id }, auth);
 
       dispatch({
         type: 'USER_REGISTER_SUCCESS',
@@ -76,7 +84,9 @@ export const register =
         payload: data,
       });
 
-      localStorage.setItem('userInfo', JSON.stringify(data));
+      const token = (({ token }) => ({ token }))(data);
+
+      localStorage.setItem('userInfo', JSON.stringify(token));
     } catch (error) {
       dispatch({
         type: 'USER_REGISTER_FAIL',
