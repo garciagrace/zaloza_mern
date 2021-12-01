@@ -38,13 +38,13 @@ const addUserToCartList = asyncHandler(async (req, res) => {
 // @route   PUT /api/carts/
 // @access  Private
 const addItemToCart = asyncHandler(async (req, res) => {
-  const { user, name, qty, image, price, product } = req.body;
+  const { user, name, qty, image, price, category, product } = req.body;
 
   // Fetch cart of logged in user
   const userCart = await Cart.findOne({ user });
 
   // check if item already exist on the cart
-  const existItem = userCart.cartItems.find((x) => x.name === name);
+  const existItem = userCart.cartItems.find((x) => x.product === product);
 
   if (existItem) {
     let cartFiltered = userCart.cartItems.filter((x) => {
@@ -64,6 +64,7 @@ const addItemToCart = asyncHandler(async (req, res) => {
         qty,
         image,
         price,
+        category,
         product,
       },
     ];

@@ -13,6 +13,7 @@ const cartSchema = mongoose.Schema(
         qty: { type: Number, required: false },
         image: { type: String, required: false },
         price: { type: Number, required: false },
+        category: { type: String, required: false },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: false,
