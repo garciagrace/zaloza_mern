@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { getUserDetails } from '../actions/userActions';
+import { getCartList } from '../actions/cartActions';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
@@ -15,9 +16,13 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const cart = useSelector((state) => state.cartList);
+  const { cartItems } = cart;
+
   useEffect(() => {
     if (userInfo) {
       dispatch(getUserDetails('profile'));
+      dispatch(getCartList('mycart'));
     }
   }, [dispatch, userInfo]);
 
@@ -42,7 +47,10 @@ const Header = () => {
               </LinkContainer>
               <LinkContainer to='/cart'>
                 <Nav.Link className='navbar-link'>
-                  <i className='fas fa-shopping-cart'></i> Cart
+                  <i className='fas fa-shopping-cart'></i> Cart{' '}
+                  {userInfo &&
+                    cartItems.length !== 0 &&
+                    `(${cartItems.reduce((acc, item) => acc + item.qty, 0)})`}
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
