@@ -67,10 +67,11 @@ const CartPage = ({ location, history }) => {
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
-                  <Col md={3}>
+                  <Col md={5}>
                     <Link to={`/products/${item.category}/${item.product}`}>
                       {item.name}
                     </Link>
+                    <p>{`Size: ${item.size}`}</p>
                   </Col>
                   <Col md={2}>P{numberWithCommas(item.price)}</Col>
                   <Col md={2}>
@@ -84,7 +85,7 @@ const CartPage = ({ location, history }) => {
                       ></Form.Control>
                     </Form.Group>
                   </Col>
-                  <Col md={2}>
+                  <Col md={1}>
                     <Button
                       type='button'
                       variant='light'

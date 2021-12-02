@@ -15,7 +15,7 @@ const getMyCart = asyncHandler(async (req, res) => {
 });
 
 // @desc    Add user to cart list
-// @route   POST /api/carts/user
+// @route   POST /api/carts/
 // @access  Private
 const addUserToCartList = asyncHandler(async (req, res) => {
   const { user } = req.body;
@@ -34,11 +34,11 @@ const addUserToCartList = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Add item to cart
+// @desc    Update cart item
 // @route   PUT /api/carts/
 // @access  Private
 const addItemToCart = asyncHandler(async (req, res) => {
-  const { user, name, qty, image, price, category, product } = req.body;
+  const { user, name, size, qty, image, price, category, product } = req.body;
 
   // Fetch cart of logged in user
   const userCart = await Cart.findOne({ user });
@@ -61,6 +61,7 @@ const addItemToCart = asyncHandler(async (req, res) => {
       ...userCart.cartItems,
       {
         name,
+        size,
         qty,
         image,
         price,

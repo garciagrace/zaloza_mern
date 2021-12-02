@@ -67,6 +67,7 @@ const ProductDetailsPage = ({ match }) => {
           addCartItem({
             user: user._id,
             name: product.name,
+            size,
             qty: 1,
             image: product.image,
             price: product.price,

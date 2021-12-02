@@ -37,7 +37,7 @@ export const getCartList = (id) => async (dispatch, getState) => {
 
 // Add item on cart
 export const addCartItem =
-  ({ user, name, qty, image, price, category, product }) =>
+  ({ user, name, size, qty, image, price, category, product }) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -57,7 +57,7 @@ export const addCartItem =
 
       const { data } = await axios.put(
         `/api/carts/`,
-        { user, name, qty, image, price, category, product },
+        { user, name, size, qty, image, price, category, product },
         config
       );
 

@@ -8,7 +8,6 @@ import User from './models/userModel.js';
 import Product from './models/productModel.js';
 import Order from './models/orderModel.js';
 import Cart from './models/cartModel.js';
-import Wishlist from './models/wishlistModel.js';
 
 import connectDB from './config/db.js';
 
@@ -39,7 +38,6 @@ const destroyData = async () => {
     await Product.deleteMany();
     await Order.deleteMany();
     await Cart.deleteMany();
-    await Wishlist.deleteMany();
 
     console.log('Data Destroyed!');
     process.exit();
