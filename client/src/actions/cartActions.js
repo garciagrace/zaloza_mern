@@ -34,3 +34,45 @@ export const getCartList = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+// Add item on cart
+export const addCartItem =
+  ({ user, name, qty, image, price, category, product }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: 'CART_ADD_ITEM_REQUEST',
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/carts/`,
+        { user, name, qty, image, price, category, product },
+        config
+      );
+
+      dispatch({
+        type: 'CART_ADD_ITEM_SUCCESS',
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: 'CART_ADD_ITEM_FAIL',
+        payload: message,
+      });
+    }
+  };
