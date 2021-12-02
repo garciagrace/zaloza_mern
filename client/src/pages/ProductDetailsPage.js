@@ -17,32 +17,65 @@ import Loader from '../components/Loader';
 import { numberWithCommas } from '../utilities';
 
 import { listProductDetails } from '../actions/productActions';
+import { getUserDetails } from '../actions/userActions';
+import { addCartItem } from '../actions/cartActions';
 
 const ProductDetailsPage = ({ match }) => {
   const [size, setSize] = useState('');
-  const [variant, setVariant] = useState('');
+  const [message, setMessage] = useState('');
   const [alert, setAlert] = useState('');
+  const [variant, setVariant] = useState('');
 
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  useEffect(() => {
-    if (!product._id || product._id !== match.params.id) {
-      dispatch(listProductDetails(match.params.category, match.params.id));
-    }
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
+  useEffect(
+    () => {
+      if (!product._id || product._id !== match.params.id) {
+        dispatch(listProductDetails(match.params.category, match.params.id));
+      }
+
+      if (userInfo) {
+        dispatch(getUserDetails('profile'));
+      }
+    },
     // eslint-disable-next-line
-  }, [dispatch, match]);
+    [dispatch, match, userInfo]
+  );
 
   const addToCartHandler = (e) => {
     e.preventDefault();
 
     if (size) {
-      setVariant('success');
-      setAlert('Added to cart successfully');
+      setAlert('');
+      if (!userInfo) {
+        setMessage('Sign in to add item on cart');
+        setVariant('danger');
+      } else {
+        setMessage('Added to cart successful');
+        setVariant('success');
+
+        dispatch(
+          addCartItem({
+            user: user._id,
+            name: product.name,
+            qty: 1,
+            image: product.image,
+            price: product.price,
+            category: product.category,
+            product: product._id,
+          })
+        );
+      }
     } else {
-      setVariant('danger');
       setAlert('Select size');
     }
   };
@@ -62,7 +95,7 @@ const ProductDetailsPage = ({ match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          {alert && <Message variant={variant}>{alert}</Message>}
+          {message && <Message variant={variant}>{message}</Message>}
           <Row>
             <Col md={4}>
               <Image src={product.image} alt={product.name} fluid />
@@ -119,8 +152,7 @@ const ProductDetailsPage = ({ match }) => {
                       </Form.Control>
                     )}
 
-                    {/* {product.stocks !== undefined && console.log(productStocks)} */}
-
+                    {alert && <p className='message-danger'>{alert}</p>}
                     <Button
                       className='btn-add'
                       onClick={(e) => addToCartHandler(e)}

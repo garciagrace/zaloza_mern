@@ -50,8 +50,8 @@ export const addCartItem =
 
       const config = {
         headers: {
-          Authorization: `Bearer ${userInfo.token}`,
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
@@ -60,6 +60,8 @@ export const addCartItem =
         { user, name, qty, image, price, category, product },
         config
       );
+
+      console.log(data);
 
       dispatch({
         type: 'CART_ADD_ITEM_SUCCESS',
