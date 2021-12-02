@@ -11,6 +11,7 @@ import ProductPage from './pages/ProductPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import ProfilePage from './pages/ProfilePage';
 import UpdateProfilePage from './pages/UpdateProfilePage';
+import CartPage from './pages/CartPage';
 
 const App = ({ match }) => {
   return (
@@ -34,6 +35,8 @@ const App = ({ match }) => {
             component={ProductDetailsPage}
             exact
           />
+          {/* Cart */}
+          <Route path='/cart' component={CartPage} />
         </Container>
       </main>
       <Footer />
