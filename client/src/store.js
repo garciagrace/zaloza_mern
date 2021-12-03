@@ -12,7 +12,11 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
 } from './reducers/userReducers';
-import { cartAddItemReducer, cartListReducer } from './reducers/cartReducers';
+import {
+  cartAddItemReducer,
+  cartListReducer,
+  cartRemoveItemReducer,
+} from './reducers/cartReducers';
 
 const reducer = combineReducers({
   // Product
@@ -26,6 +30,7 @@ const reducer = combineReducers({
   // Cart
   cartList: cartListReducer,
   cartAddItem: cartAddItemReducer,
+  cartRemoveItem: cartRemoveItemReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

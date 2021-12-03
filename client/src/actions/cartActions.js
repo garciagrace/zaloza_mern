@@ -61,8 +61,6 @@ export const addCartItem =
         config
       );
 
-      console.log(data);
-
       dispatch({
         type: 'CART_ADD_ITEM_SUCCESS',
         payload: data,
@@ -74,6 +72,48 @@ export const addCartItem =
           : error.message;
       dispatch({
         type: 'CART_ADD_ITEM_FAIL',
+        payload: message,
+      });
+    }
+  };
+
+/// Remove item from cart
+export const removeCartItem =
+  ({ user, cartID }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: 'CART_REMOVE_ITEM_REQUEST',
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/carts/mycart`,
+        { user, cartID },
+        config
+      );
+
+      dispatch({
+        type: 'CART_REMOVE_ITEM_SUCCESS',
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: 'CART_REMOVE_ITEM_FAIL',
         payload: message,
       });
     }

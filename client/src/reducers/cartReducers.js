@@ -29,3 +29,19 @@ export const cartAddItemReducer = (state = { cartItems: [] }, action) => {
       return state;
   }
 };
+
+// Remove item from cart
+export const cartRemoveItemReducer = (state = { cartItems: [] }, action) => {
+  switch (action.type) {
+    case 'CART_REMOVE_ITEM_REQUEST':
+      return { ...state, loading: true };
+    case 'CART_REMOVE_ITEM_SUCCESS':
+      return { loading: false, success: true, cartItems: action.payload };
+    case 'CART_REMOVE_ITEM_FAIL':
+      return { loading: false, error: action.payload };
+    case 'CART_REMOVE_ITEM_DONE':
+      return { success: false };
+    default:
+      return state;
+  }
+};
