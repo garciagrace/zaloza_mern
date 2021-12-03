@@ -47,11 +47,9 @@ const addItemToCart = asyncHandler(async (req, res) => {
   const existItem = userCart.cartItems.find((x) => x.product === product);
 
   if (existItem) {
-    let cartFiltered = userCart.cartItems.filter((x) => {
+    const cartFiltered = userCart.cartItems.filter((x) => {
       return x.name !== existItem.name;
     });
-
-    existItem.qty += qty;
 
     if (!cartFiltered) {
       userCart.cartItems = { existItem };
@@ -76,4 +74,24 @@ const addItemToCart = asyncHandler(async (req, res) => {
   res.status(201).json(updatedCart);
 });
 
-export { getMyCart, addUserToCartList, addItemToCart };
+// @desc    Removed item on cart
+// @route   PUT /api/carts/mycart
+// @access  Private
+const removeItemOnCart = asyncHandler(async (req, res) => {
+  const { user, cartID } = req.body;
+
+  // Fetch cart of logged in user
+  const userCart = await Cart.findOne({ user });
+
+  const item = userCart.cartItems.filter((x) => {
+    return x.id !== cartID;
+  });
+
+  userCart.cartItems = item;
+
+  const removedItem = await userCart.save();
+
+  res.status(201).json(removedItem);
+});
+
+export { getMyCart, addUserToCartList, addItemToCart, removeItemOnCart };
