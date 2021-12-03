@@ -14,7 +14,7 @@ import {
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
-import { getCartList } from '../actions/cartActions';
+import { getCartList, removeCartItem } from '../actions/cartActions';
 import { getUserDetails } from '../actions/userActions';
 
 import { numberWithCommas } from '../utilities';
@@ -25,24 +25,34 @@ const CartPage = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const cart = useSelector((state) => state.cartList);
   const { cartItems, loading } = cart;
+
+  const removed = useSelector((state) => state.cartRemoveItem);
+  const { success } = removed;
 
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     } else {
+      if (success) {
+        dispatch({ type: 'CART_REMOVE_ITEM_DONE' });
+      }
+
       dispatch(getUserDetails('profile'));
       dispatch(getCartList('mycart'));
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, success]);
 
   const addQtyHandler = (id) => {
     console.log('add');
   };
 
   const removeFromCartHandler = (id) => {
-    console.log('remove cart');
+    dispatch(removeCartItem({ user: user._id, cartID: id }));
   };
 
   const checkoutHandler = () => {
@@ -89,7 +99,7 @@ const CartPage = ({ location, history }) => {
                     <Button
                       type='button'
                       variant='light'
-                      onClick={() => removeFromCartHandler(item.product)}
+                      onClick={() => removeFromCartHandler(item._id)}
                     >
                       <i className='fas fa-trash'></i>
                     </Button>
