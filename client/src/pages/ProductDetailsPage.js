@@ -18,7 +18,7 @@ import { numberWithCommas } from '../utilities';
 
 import { listProductDetails } from '../actions/productActions';
 import { getUserDetails } from '../actions/userActions';
-import { addCartItem } from '../actions/cartActions';
+import { addCartItem, getCartList } from '../actions/cartActions';
 
 const ProductDetailsPage = ({ match }) => {
   const [size, setSize] = useState('');
@@ -37,6 +37,9 @@ const ProductDetailsPage = ({ match }) => {
   const userDetails = useSelector((state) => state.userDetails);
   const { user } = userDetails;
 
+  const cart = useSelector((state) => state.cartAddItem);
+  const { success } = cart;
+
   useEffect(
     () => {
       if (!product._id || product._id !== match.params.id) {
@@ -46,9 +49,15 @@ const ProductDetailsPage = ({ match }) => {
       if (userInfo) {
         dispatch(getUserDetails('profile'));
       }
+
+      if (success) {
+        dispatch({ type: 'CART_LIST_RESET' });
+        dispatch({ type: 'CART_ADD_ITEM_DONE' });
+        dispatch(getCartList('mycart'));
+      }
     },
     // eslint-disable-next-line
-    [dispatch, match, userInfo]
+    [dispatch, match, userInfo, success]
   );
 
   const addToCartHandler = (e) => {
