@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Form,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Button,
-  Card,
-} from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Button, Card } from 'react-bootstrap';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -47,16 +39,12 @@ const CartPage = ({ location, history }) => {
     }
   }, [dispatch, history, userInfo, success]);
 
-  const addQtyHandler = (id) => {
-    console.log('add');
-  };
-
   const removeFromCartHandler = (id) => {
     dispatch(removeCartItem({ user: user._id, cartID: id }));
   };
 
   const checkoutHandler = () => {
-    console.log('checkout');
+    history.push('/login?redirect=shipping');
   };
 
   return (
@@ -85,15 +73,7 @@ const CartPage = ({ location, history }) => {
                   </Col>
                   <Col md={2}>P{numberWithCommas(item.price)}</Col>
                   <Col md={2}>
-                    <Form.Group>
-                      <Form.Control
-                        type='number'
-                        min={1}
-                        max={10}
-                        value={item.qty}
-                        onChange={() => addQtyHandler(item.name)}
-                      ></Form.Control>
-                    </Form.Group>
+                    <p>{`Qty: ${item.qty}`}</p>
                   </Col>
                   <Col md={1}>
                     <Button

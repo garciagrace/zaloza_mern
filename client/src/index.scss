@@ -225,10 +225,15 @@ select {
 
 // Profile
 .address-grp {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+
   & > h6 {
     font-weight: 900 !important;
   }
+}
+
+.address-container {
+  margin: 1.5rem 0;
 }
 
 // Footer
