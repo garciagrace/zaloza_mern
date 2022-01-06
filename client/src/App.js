@@ -13,6 +13,7 @@ import ProfilePage from './pages/ProfilePage';
 import UpdateProfilePage from './pages/UpdateProfilePage';
 import CartPage from './pages/CartPage';
 import ShippingPage from './pages/ShippingPage';
+import PaymentPage from './pages/PaymentPage';
 
 const App = ({ match }) => {
   return (
@@ -39,6 +40,7 @@ const App = ({ match }) => {
           {/* Cart */}
           <Route path='/cart' component={CartPage} />
           <Route path='/shipping' component={ShippingPage} />
+          <Route path='/payment' component={PaymentPage} />
         </Container>
       </main>
       <Footer />

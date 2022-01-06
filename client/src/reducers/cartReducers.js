@@ -45,3 +45,21 @@ export const cartRemoveItemReducer = (state = { cartItems: [] }, action) => {
       return state;
   }
 };
+
+// Save shipping address and payment method on local storage
+export const cartReducer = (state = { shippingAddress: {} }, action) => {
+  switch (action.type) {
+    case 'CART_SAVE_SHIPPING_ADDRESS':
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
+    case 'CART_SAVE_PAYMENT_METHOD':
+      return {
+        ...state,
+        paymentMethod: action.payload,
+      };
+    default:
+      return state;
+  }
+};
