@@ -14,6 +14,7 @@ import UpdateProfilePage from './pages/UpdateProfilePage';
 import CartPage from './pages/CartPage';
 import ShippingPage from './pages/ShippingPage';
 import PaymentPage from './pages/PaymentPage';
+import PlaceOrderPage from './pages/PlaceOrderPage';
 
 const App = ({ match }) => {
   return (
@@ -41,6 +42,7 @@ const App = ({ match }) => {
           <Route path='/cart' component={CartPage} />
           <Route path='/shipping' component={ShippingPage} />
           <Route path='/payment' component={PaymentPage} />
+          <Route path='/placeorder' component={PlaceOrderPage} />
         </Container>
       </main>
       <Footer />
