@@ -94,4 +94,26 @@ const removeItemOnCart = asyncHandler(async (req, res) => {
   res.status(201).json(removedItem);
 });
 
-export { getMyCart, addUserToCartList, addItemToCart, removeItemOnCart };
+// @desc    Clear cart
+// @route   PUT /api/carts/clearcart
+// @access  Private
+const clearCart = asyncHandler(async (req, res) => {
+  const { user } = req.body;
+
+  // Fetch cart of logged in user
+  const userCart = await Cart.findOne({ user });
+
+  userCart.cartItems = [];
+
+  const cartCleared = await userCart.save();
+
+  res.status(201).json(cartCleared);
+});
+
+export {
+  getMyCart,
+  addUserToCartList,
+  addItemToCart,
+  removeItemOnCart,
+  clearCart,
+};
