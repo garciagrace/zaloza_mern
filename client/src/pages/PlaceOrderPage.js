@@ -1,17 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
+
 import { numberWithCommas } from '../utilities';
+import { createOrder } from '../actions/orderActions';
 
 const PlaceOrderPage = ({ history }) => {
+  const dispatch = useDispatch();
+  const [itemPrice, setItemPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const cart = useSelector((state) => state.cartList);
   const { cartItems } = cart;
 
   const shipping = useSelector((state) => state.cart);
   const { shippingAddress, paymentMethod } = shipping;
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+      dispatch({ type: 'ORDER_CREATE_RESET' });
+    }
+
+    if (cartItems.length !== 0) {
+      setItemPrice(
+        cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
+      );
+
+      setTotalPrice(
+        Number(
+          cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
+        ) + 100
+      );
+    }
+    // eslint-disable-next-line
+  }, [history, success, cartItems]);
+
+  const placeOrderHandler = () => {
+    console.log(itemPrice);
+
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        itemPrice,
+        shippingAddress: shippingAddress,
+        shippingPrice: 100,
+        totalPrice,
+        paymentMethod: paymentMethod,
+      })
+    );
+  };
 
   return (
     <>
@@ -78,13 +122,7 @@ const PlaceOrderPage = ({ history }) => {
                 <Row>
                   <Col>Items</Col>
                   <Col className='d-flex justify-content-end'>
-                    P{' '}
-                    {numberWithCommas(
-                      cartItems.reduce(
-                        (acc, item) => acc + item.qty * item.price,
-                        0
-                      )
-                    )}
+                    P {numberWithCommas(itemPrice)}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -98,15 +136,7 @@ const PlaceOrderPage = ({ history }) => {
                 <Row className='fw-900'>
                   <Col>Total</Col>
                   <Col className='d-flex justify-content-end'>
-                    P{' '}
-                    {numberWithCommas(
-                      Number(
-                        cartItems.reduce(
-                          (acc, item) => acc + item.qty * item.price,
-                          0
-                        )
-                      ) + 100
-                    )}
+                    P {numberWithCommas(Number(totalPrice))}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -116,6 +146,7 @@ const PlaceOrderPage = ({ history }) => {
                   type='button'
                   className='btn-block'
                   disabled={cart.cartItems === 0}
+                  onClick={placeOrderHandler}
                 >
                   Place Order
                 </Button>

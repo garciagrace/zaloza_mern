@@ -20,11 +20,16 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
+    itemPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
     shippingAddress: {
       houseNo: { type: String, required: true },
       street: { type: String, required: true },
       barangay: { type: String, required: true },
-      town: { type: String, required: true },
+      city: { type: String, required: true },
       province: { type: String, required: true },
       postalCode: { type: String, required: true },
     },

@@ -32,11 +32,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
+
     dispatch({
-      type: ORDER_CREATE_FAIL,
+      type: 'ORDER_CREATE_FAIL',
       payload: message,
     });
   }
@@ -70,9 +68,6 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
     dispatch({
       type: 'ORDER_DETAILS_FAIL',
       payload: message,
