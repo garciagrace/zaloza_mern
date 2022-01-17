@@ -63,3 +63,17 @@ export const cartReducer = (state = { shippingAddress: {} }, action) => {
       return state;
   }
 };
+
+// Clear cart
+export const cartClearReducer = (state = { cartItems: [] }, action) => {
+  switch (action.type) {
+    case 'CART_CLEAR_REQUEST':
+      return { ...state, loading: true };
+    case 'CART_CLEAR_SUCCESS':
+      return { loading: false, success: true, cartItems: action.payload };
+    case 'CART_CLEAR_FAIL':
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

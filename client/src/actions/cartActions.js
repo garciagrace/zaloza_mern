@@ -138,3 +138,45 @@ export const savePaymentMethod = (data) => (dispatch) => {
 
   localStorage.setItem('paymentMethod', JSON.stringify(data));
 };
+
+// Clear cart
+export const clearCart =
+  ({ user }) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: 'CART_CLEAR_REQUEST',
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/carts/clearcart`,
+        { user },
+        config
+      );
+
+      dispatch({
+        type: 'CART_CLEAR_SUCCESS',
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: 'CART_CLEAR_FAIL',
+        payload: message,
+      });
+    }
+  };

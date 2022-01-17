@@ -14,6 +14,7 @@ import {
 } from './reducers/userReducers';
 import {
   cartAddItemReducer,
+  cartClearReducer,
   cartListReducer,
   cartReducer,
   cartRemoveItemReducer,
@@ -37,6 +38,7 @@ const reducer = combineReducers({
   cartAddItem: cartAddItemReducer,
   cartRemoveItem: cartRemoveItemReducer,
   cart: cartReducer,
+  cartClear: cartClearReducer,
   // Order
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,

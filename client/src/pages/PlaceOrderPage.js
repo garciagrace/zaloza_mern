@@ -7,11 +7,15 @@ import CheckoutSteps from '../components/CheckoutSteps';
 
 import { numberWithCommas } from '../utilities';
 import { createOrder } from '../actions/orderActions';
+import { clearCart } from '../actions/cartActions';
 
 const PlaceOrderPage = ({ history }) => {
   const dispatch = useDispatch();
   const [itemPrice, setItemPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
 
   const cart = useSelector((state) => state.cartList);
   const { cartItems } = cart;
@@ -43,8 +47,6 @@ const PlaceOrderPage = ({ history }) => {
   }, [history, success, cartItems]);
 
   const placeOrderHandler = () => {
-    console.log(itemPrice);
-
     dispatch(
       createOrder({
         orderItems: cartItems,
@@ -55,6 +57,7 @@ const PlaceOrderPage = ({ history }) => {
         paymentMethod: paymentMethod,
       })
     );
+    dispatch(clearCart({ user: user._id }));
   };
 
   return (
