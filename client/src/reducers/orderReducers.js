@@ -48,3 +48,17 @@ export const orderDetailsReducer = (
       return state;
   }
 };
+
+// Get order by specific user
+export const ordersByUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'ORDER_LIST_REQUEST':
+      return { ...state, loading: true };
+    case 'ORDER_LIST_SUCCESS':
+      return { loading: false, order: action.payload };
+    case 'ORDER_LIST_FAIL':
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

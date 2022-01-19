@@ -74,3 +74,38 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+// Get order by specific user
+export const getOrdersByUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: 'ORDER_LIST_REQUEST',
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/orders/${id}`, config);
+
+    dispatch({
+      type: 'ORDER_LIST_SUCCESS',
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: 'ORDER_LIST_FAIL',
+      payload: message,
+    });
+  }
+};
