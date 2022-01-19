@@ -34,7 +34,7 @@ const OrderDetailsPage = ({ match, history }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <Link className='btn btn-light my-3' to={'/order'}>
+      <Link className='btn btn-light my-3' to={'/orders'}>
         Go Back
       </Link>
 
