@@ -115,6 +115,14 @@ const OrderDetailsPage = ({ match, history }) => {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
+                      <Col>Status</Col>
+                      <Col className='d-flex justify-content-end'>
+                        {order.orderStatus}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
                       <Col>Items</Col>
                       <Col className='d-flex justify-content-end'>
                         P {numberWithCommas(Number(order.itemPrice))}

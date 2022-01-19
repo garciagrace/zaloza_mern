@@ -47,12 +47,6 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    paymentResult: {
-      id: { type: String },
-      status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
-    },
     isPaid: {
       type: Boolean,
       required: true,
@@ -68,6 +62,11 @@ const orderSchema = mongoose.Schema(
     },
     deliveredAt: {
       type: Date,
+    },
+    orderStatus: {
+      type: String,
+      required: true,
+      default: 'Processing',
     },
   },
   {
