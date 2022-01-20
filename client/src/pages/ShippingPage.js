@@ -6,6 +6,7 @@ import { saveShippingAddress } from '../actions/cartActions';
 import { getUserDetails } from '../actions/userActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import FormContainer from '../components/FormContainer';
+import Message from '../components/Message';
 
 const ShippingPage = ({ history }) => {
   const [houseNo, setHouseNo] = useState('');
@@ -14,6 +15,7 @@ const ShippingPage = ({ history }) => {
   const [city, setCity] = useState('');
   const [province, setProvince] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [alert, setAlert] = useState('');
 
   const dispatch = useDispatch();
 
@@ -40,21 +42,34 @@ const ShippingPage = ({ history }) => {
         setPostalCode(user.address.postalCode);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, alert]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      saveShippingAddress({
-        houseNo,
-        street,
-        barangay,
-        city,
-        province,
-        postalCode,
-      })
-    );
-    history.push('/payment');
+
+    if (
+      houseNo === '' &&
+      street === '' &&
+      barangay === '' &&
+      city === '' &&
+      province === '' &&
+      postalCode === ''
+    ) {
+      setAlert('Fill up all fields');
+    } else {
+      dispatch(
+        saveShippingAddress({
+          houseNo,
+          street,
+          barangay,
+          city,
+          province,
+          postalCode,
+        })
+      );
+
+      history.push('/payment');
+    }
   };
 
   return (
@@ -66,6 +81,7 @@ const ShippingPage = ({ history }) => {
         </div>
 
         <div className='canvas-body'>
+          {alert && <Message variant='danger'>{alert}</Message>}
           <FormContainer>
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='houseNo'>
