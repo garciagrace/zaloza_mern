@@ -39,7 +39,7 @@ const OrderPage = ({ history }) => {
             <div className='canvas-body'>
               {loading ? (
                 <Loader />
-              ) : !order ? (
+              ) : !order || order.length === 0 ? (
                 <Message>Order is empty</Message>
               ) : (
                 <ListGroup variant='flush'>
