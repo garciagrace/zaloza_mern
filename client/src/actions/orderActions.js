@@ -25,8 +25,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
       payload: data,
     });
 
-    localStorage.removeItem('paymentMethod');
+    localStorage.removeItem('paymentDetails');
     localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('__paypal_storage__');
   } catch (error) {
     const message =
       error.response && error.response.data.message

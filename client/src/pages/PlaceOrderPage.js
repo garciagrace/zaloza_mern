@@ -21,10 +21,12 @@ const PlaceOrderPage = ({ history }) => {
   const { cartItems } = cart;
 
   const shipping = useSelector((state) => state.cart);
-  const { shippingAddress, paymentDetails } = shipping;
+  const { shippingAddress } = shipping;
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success } = orderCreate;
+
+  const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
 
   useEffect(() => {
     if (success) {
@@ -44,7 +46,7 @@ const PlaceOrderPage = ({ history }) => {
       );
     }
     // eslint-disable-next-line
-  }, [history, success, cartItems]);
+  }, [history, success, cartItems, paymentDetails]);
 
   const placeOrderHandler = () => {
     dispatch(
@@ -55,6 +57,9 @@ const PlaceOrderPage = ({ history }) => {
         shippingPrice: 100,
         totalPrice,
         paymentMethod: paymentDetails.paymentMethod,
+        isPaid: paymentDetails.paymentStatus,
+        paidAt: paymentDetails.paymentResults.update_time,
+        paymentResult: paymentDetails.paymentResults,
       })
     );
     dispatch(clearCart({ user: user._id }));

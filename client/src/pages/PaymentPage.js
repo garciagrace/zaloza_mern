@@ -50,7 +50,17 @@ const PaymentPage = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    dispatch(savePaymentDetails(paymentMethod));
+    dispatch(
+      savePaymentDetails({
+        paymentMethod,
+        paymentStatus: false,
+        paymentResults: {
+          id: null,
+          status: null,
+          update_time: null,
+        },
+      })
+    );
     history.push('/placeorder');
   };
 
@@ -58,20 +68,18 @@ const PaymentPage = ({ history }) => {
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
 
-    if (paymentResult) {
-      dispatch(
-        savePaymentDetails({
-          paymentMethod,
-          paymentStatus: paymentResult.status === 'COMPLETED' ? true : false,
-          paymentResults: {
-            id: paymentResult.id,
-            status: paymentResult.status,
-            update_time: paymentResult.update_time,
-          },
-        })
-      );
-      history.push('/placeorder');
-    }
+    dispatch(
+      savePaymentDetails({
+        paymentMethod,
+        paymentStatus: paymentResult.status === 'COMPLETED' ? true : false,
+        paymentResults: {
+          id: paymentResult.id,
+          status: paymentResult.status,
+          update_time: paymentResult.update_time,
+        },
+      })
+    );
+    history.push('/placeorder');
   };
 
   return (
