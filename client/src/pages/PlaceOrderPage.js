@@ -21,7 +21,7 @@ const PlaceOrderPage = ({ history }) => {
   const { cartItems } = cart;
 
   const shipping = useSelector((state) => state.cart);
-  const { shippingAddress, paymentMethod } = shipping;
+  const { shippingAddress, paymentDetails } = shipping;
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success } = orderCreate;
@@ -54,7 +54,7 @@ const PlaceOrderPage = ({ history }) => {
         shippingAddress: shippingAddress,
         shippingPrice: 100,
         totalPrice,
-        paymentMethod: paymentMethod,
+        paymentMethod: paymentDetails.paymentMethod,
       })
     );
     dispatch(clearCart({ user: user._id }));
@@ -78,8 +78,20 @@ const PlaceOrderPage = ({ history }) => {
 
             <ListGroup.Item>
               <h2>Payment Method</h2>
-              <strong>Method: </strong>
-              {paymentMethod}
+              <Row>
+                <Col>
+                  <p>
+                    <span className='fw-900'>Method: </span>
+                    {paymentDetails.paymentMethod}
+                  </p>
+                </Col>
+                <Col>
+                  <p>
+                    <span className='fw-900'>Status: </span>
+                    {paymentDetails.paymentStatus ? 'Paid' : 'Not yet Paid'}
+                  </p>
+                </Col>
+              </Row>
             </ListGroup.Item>
 
             <ListGroup.Item>
