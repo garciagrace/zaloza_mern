@@ -48,33 +48,53 @@ const OrderDetailsPage = ({ match, history }) => {
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h4>Shipping</h4>
-                  <p>
-                    <strong>Name: </strong>{' '}
-                    {`${order.user.firstName} ${order.user.lastName}`}
-                  </p>
-                  <p>
-                    <strong>Email: </strong>{' '}
-                    <a href={`mailto:${order.user.email}`}>
-                      {order.user.email}
-                    </a>
-                  </p>
-                  <p>
-                    <strong>Address: </strong>
-                    {order.shippingAddress.houseNo},{' '}
-                    {order.shippingAddress.street},{' '}
-                    {order.shippingAddress.barangay},{' '}
-                    {order.shippingAddress.city},{' '}
-                    {order.shippingAddress.province}{' '}
-                    {order.shippingAddress.postalCode}
-                  </p>
+                  <Row>
+                    <Col>
+                      <p>
+                        <span className='fw-900'>Name: </span>{' '}
+                        {`${order.user.firstName} ${order.user.lastName}`}
+                      </p>
+                      <p>
+                        <span className='fw-900'>Email: </span>{' '}
+                        <a href={`mailto:${order.user.email}`}>
+                          {order.user.email}
+                        </a>
+                      </p>
+                      <p>
+                        <span className='fw-900'>Address: </span>
+                        {order.shippingAddress.houseNo},{' '}
+                        {order.shippingAddress.street},{' '}
+                        {order.shippingAddress.barangay},{' '}
+                        {order.shippingAddress.city},{' '}
+                        {order.shippingAddress.province}{' '}
+                        {order.shippingAddress.postalCode}
+                      </p>
+                    </Col>
+                    <Col>
+                      <p>
+                        <span className='fw-900'>Status: </span>{' '}
+                        {order.isDelivered ? 'Delivered' : 'Not yet delivered'}
+                      </p>
+                    </Col>
+                  </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <h4>Payment Method</h4>
-                  <p>
-                    <strong>Method: </strong>
-                    {order.paymentMethod}
-                  </p>
+                  <Row>
+                    <Col>
+                      <p>
+                        <span className='fw-900'>Method: </span>
+                        {order.paymentMethod}
+                      </p>
+                    </Col>
+                    <Col>
+                      <p>
+                        <span className='fw-900'>Status: </span>{' '}
+                        {order.isPaid ? 'Paid' : 'Not yet paid'}
+                      </p>
+                    </Col>
+                  </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
