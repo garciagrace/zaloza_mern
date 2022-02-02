@@ -17,6 +17,7 @@ import PaymentPage from './pages/PaymentPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import OrderPage from './pages/OrderPage';
+import AdminOrderPage from './pages/AdminOrderPage';
 
 const App = ({ match }) => {
   return (
@@ -48,6 +49,8 @@ const App = ({ match }) => {
           {/* Order */}
           <Route path='/order/:id' component={OrderDetailsPage} />
           <Route path='/orders' component={OrderPage} />
+          {/* Admin */}
+          <Route path='/admin' component={AdminOrderPage} />
         </Container>
       </main>
       <Footer />
