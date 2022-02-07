@@ -50,7 +50,7 @@ const App = ({ match }) => {
           <Route path='/order/:id' component={OrderDetailsPage} />
           <Route path='/orders' component={OrderPage} />
           {/* Admin */}
-          <Route path='/admin' component={AdminOrderPage} />
+          <Route path='/admin/order' component={AdminOrderPage} />
         </Container>
       </main>
       <Footer />

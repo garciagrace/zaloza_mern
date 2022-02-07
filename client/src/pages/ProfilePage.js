@@ -32,9 +32,9 @@ const ProfilePage = ({ location, history }) => {
   return (
     <Row>
       <Col md={3}>
-        <SideNav />
+        <SideNav isAdmin={user.isAdmin} />
       </Col>
-      <Col md={8}>
+      <Col md={9}>
         {loading ? (
           <Loader />
         ) : error ? (
