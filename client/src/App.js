@@ -18,6 +18,7 @@ import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import OrderPage from './pages/OrderPage';
 import AdminOrderPage from './pages/AdminOrderPage';
+import AdminUserPage from './pages/AdminUserPage';
 
 const App = ({ match }) => {
   return (
@@ -51,6 +52,7 @@ const App = ({ match }) => {
           <Route path='/orders' component={OrderPage} />
           {/* Admin */}
           <Route path='/admin/order' component={AdminOrderPage} />
+          <Route path='/admin/user' component={AdminUserPage} />
         </Container>
       </main>
       <Footer />
