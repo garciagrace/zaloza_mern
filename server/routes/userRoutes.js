@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   getUsers,
   getUserById,
+  updateUser,
 } from '../controllers/userController.js';
 import { admin, protect } from '../middleware/authMiddleware.js';
 
@@ -17,6 +18,9 @@ router
   .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
-router.route('/:id').get(protect, admin, getUserById);
+router
+  .route('/:id')
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser);
 
 export default router;
