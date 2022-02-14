@@ -146,3 +146,37 @@ export const listOrders = () => async (dispatch, getState) => {
     });
   }
 };
+
+// Update order to paid - admin
+export const updateOrderToPaid = (orderId, userInfo) => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'ORDER_PAY_REQUEST',
+    });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/orders/pay/${orderId}`, config);
+    // const { data } = await axios.get(`/api/orders`, config);
+    console.log(data);
+
+    dispatch({
+      type: 'ORDER_PAY_SUCCESS',
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: 'ORDER_PAY_FAIL',
+      payload: message,
+    });
+  }
+};

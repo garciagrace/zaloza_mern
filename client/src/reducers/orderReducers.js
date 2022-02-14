@@ -84,3 +84,25 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return state;
   }
 };
+
+// Update order to paid - admin
+export const orderPayReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'ORDER_PAY_REQUEST':
+      return {
+        loading: true,
+      };
+    case 'ORDER_PAY_SUCCESS':
+      return {
+        loading: false,
+        success: true,
+      };
+    case 'ORDER_PAY_FAIL':
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
