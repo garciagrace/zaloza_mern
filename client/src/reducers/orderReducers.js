@@ -44,6 +44,7 @@ export const orderDetailsReducer = (
         loading: false,
         error: action.payload,
       };
+
     default:
       return state;
   }
@@ -102,6 +103,8 @@ export const orderPayReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'ORDER_PAY_RESET':
+      return {};
     default:
       return state;
   }

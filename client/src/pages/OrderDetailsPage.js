@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails } from '../actions/orderActions';
+import { getOrderDetails, updateOrderToPaid } from '../actions/orderActions';
 import { numberWithCommas } from '../utilities';
 
 const OrderDetailsPage = ({ match, history }) => {
@@ -15,18 +15,29 @@ const OrderDetailsPage = ({ match, history }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const { success: successPay } = orderPay;
 
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     }
 
-    if (!order || order._id !== orderId) {
+    if (!order || order._id !== orderId || successPay) {
+      dispatch({ type: 'ORDER_PAY_RESET' });
       dispatch(getOrderDetails(orderId));
     }
-  }, [userInfo, history, dispatch, orderId, order]);
+  }, [userInfo, history, dispatch, orderId, order, successPay]);
+
+  const paymentHandler = () => {
+    dispatch(updateOrderToPaid(orderId, userInfo.token));
+  };
 
   return loading ? (
     <Loader />
@@ -165,6 +176,21 @@ const OrderDetailsPage = ({ match, history }) => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
+
+                  {user.isAdmin && !order.isPaid && (
+                    <ListGroup.Item>
+                      <Row className='p-2'>
+                        <Button
+                          type='button'
+                          variant='success'
+                          className='btn btn-block'
+                          onClick={paymentHandler}
+                        >
+                          Mark As Paid
+                        </Button>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
               </Card>
             </Col>
