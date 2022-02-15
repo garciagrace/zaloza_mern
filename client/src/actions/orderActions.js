@@ -161,8 +161,6 @@ export const updateOrderToPaid = (orderId, userInfo) => async (dispatch) => {
     };
 
     const { data } = await axios.put(`/api/orders/pay/${orderId}`, config);
-    // const { data } = await axios.get(`/api/orders`, config);
-    console.log(data);
 
     dispatch({
       type: 'ORDER_PAY_SUCCESS',
@@ -180,3 +178,39 @@ export const updateOrderToPaid = (orderId, userInfo) => async (dispatch) => {
     });
   }
 };
+
+// Update order to delivered - admin
+export const updateOrderToDelivered =
+  (orderId, userInfo) => async (dispatch) => {
+    try {
+      dispatch({
+        type: 'ORDER_DELIVER_REQUEST',
+      });
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/orders/deliver/${orderId}`,
+        config
+      );
+
+      dispatch({
+        type: 'ORDER_DELIVER_SUCCESS',
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+
+      dispatch({
+        type: 'ORDER_DELIVER_FAIL',
+        payload: message,
+      });
+    }
+  };
