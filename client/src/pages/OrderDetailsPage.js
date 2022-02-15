@@ -4,7 +4,11 @@ import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails, updateOrderToPaid } from '../actions/orderActions';
+import {
+  getOrderDetails,
+  updateOrderToDelivered,
+  updateOrderToPaid,
+} from '../actions/orderActions';
 import { numberWithCommas } from '../utilities';
 
 const OrderDetailsPage = ({ match, history }) => {
@@ -24,19 +28,27 @@ const OrderDetailsPage = ({ match, history }) => {
   const orderPay = useSelector((state) => state.orderPay);
   const { success: successPay } = orderPay;
 
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { success: successDeliver } = orderDeliver;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     }
 
-    if (!order || order._id !== orderId || successPay) {
+    if (!order || order._id !== orderId || successPay || successDeliver) {
       dispatch({ type: 'ORDER_PAY_RESET' });
+      dispatch({ type: 'ORDER_DELIVER_RESET' });
       dispatch(getOrderDetails(orderId));
     }
-  }, [userInfo, history, dispatch, orderId, order, successPay]);
+  }, [userInfo, history, dispatch, orderId, order, successPay, successDeliver]);
 
   const paymentHandler = () => {
     dispatch(updateOrderToPaid(orderId, userInfo.token));
+  };
+
+  const deliveryHandler = () => {
+    dispatch(updateOrderToDelivered(orderId, userInfo.token));
   };
 
   return loading ? (
@@ -176,7 +188,6 @@ const OrderDetailsPage = ({ match, history }) => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
-
                   {user.isAdmin && !order.isPaid && (
                     <ListGroup.Item>
                       <Row className='p-2'>
@@ -187,6 +198,20 @@ const OrderDetailsPage = ({ match, history }) => {
                           onClick={paymentHandler}
                         >
                           Mark As Paid
+                        </Button>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+                  {user.isAdmin && !order.isDelivered && (
+                    <ListGroup.Item>
+                      <Row className='p-2'>
+                        <Button
+                          type='button'
+                          variant='warning'
+                          className='btn btn-block'
+                          onClick={deliveryHandler}
+                        >
+                          Mark As Delivered
                         </Button>
                       </Row>
                     </ListGroup.Item>
