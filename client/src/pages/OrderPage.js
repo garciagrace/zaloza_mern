@@ -14,6 +14,9 @@ const OrderPage = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
   const orderList = useSelector((state) => state.ordersByUser);
   const { order, loading } = orderList;
 
@@ -28,7 +31,7 @@ const OrderPage = ({ history }) => {
   return (
     <Row>
       <Col md={3}>
-        <SideNav />
+        <SideNav isAdmin={user.isAdmin} />
       </Col>
       <Col md={8}>
         <>

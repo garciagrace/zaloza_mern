@@ -5,7 +5,8 @@ const SideNav = (isAdmin) => {
   return (
     <div className='side-nav'>
       <h5>NAVIGATION</h5>
-      {isAdmin && (
+
+      {isAdmin === true && (
         <>
           <LinkContainer to='/admin/order'>
             <p className='side-nav-link'>Order List</p>

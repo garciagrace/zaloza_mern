@@ -34,6 +34,7 @@ const ProfilePage = ({ location, history }) => {
       <Col md={3}>
         <SideNav isAdmin={user.isAdmin} />
       </Col>
+
       <Col md={9}>
         {loading ? (
           <Loader />

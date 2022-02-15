@@ -57,9 +57,15 @@ const OrderDetailsPage = ({ match, history }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <Link className='btn btn-light my-3' to={'/orders'}>
-        Go Back
-      </Link>
+      {user.isAdmin ? (
+        <Link className='btn btn-light my-3' to={'/admin/order'}>
+          Go Back
+        </Link>
+      ) : (
+        <Link className='btn btn-light my-3' to={'/orders'}>
+          Go Back
+        </Link>
+      )}
 
       <div className='canvas'>
         <div className='canvas-header'>
