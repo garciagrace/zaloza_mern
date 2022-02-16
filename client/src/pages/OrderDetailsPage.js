@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import {
   getOrderDetails,
+  updateOrderStatus,
   updateOrderToDelivered,
   updateOrderToPaid,
 } from '../actions/orderActions';
@@ -31,17 +32,36 @@ const OrderDetailsPage = ({ match, history }) => {
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { success: successDeliver } = orderDeliver;
 
+  const orderStatus = useSelector((state) => state.orderStatus);
+  const { success: successStatus } = orderStatus;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     }
 
-    if (!order || order._id !== orderId || successPay || successDeliver) {
+    if (
+      !order ||
+      order._id !== orderId ||
+      successPay ||
+      successDeliver ||
+      successStatus
+    ) {
       dispatch({ type: 'ORDER_PAY_RESET' });
       dispatch({ type: 'ORDER_DELIVER_RESET' });
+      dispatch({ type: 'ORDER_STATUS_RESET' });
       dispatch(getOrderDetails(orderId));
     }
-  }, [userInfo, history, dispatch, orderId, order, successPay, successDeliver]);
+  }, [
+    userInfo,
+    history,
+    dispatch,
+    orderId,
+    order,
+    successPay,
+    successDeliver,
+    successStatus,
+  ]);
 
   const paymentHandler = () => {
     dispatch(updateOrderToPaid(orderId, userInfo.token));
@@ -49,6 +69,10 @@ const OrderDetailsPage = ({ match, history }) => {
 
   const deliveryHandler = () => {
     dispatch(updateOrderToDelivered(orderId, userInfo.token));
+  };
+
+  const orderStatusHandler = () => {
+    dispatch(updateOrderStatus(orderId, userInfo.token));
   };
 
   return loading ? (
@@ -218,6 +242,20 @@ const OrderDetailsPage = ({ match, history }) => {
                           onClick={deliveryHandler}
                         >
                           Mark As Delivered
+                        </Button>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+                  {user.isAdmin && order.orderStatus === 'Processing' && (
+                    <ListGroup.Item>
+                      <Row className='p-2'>
+                        <Button
+                          type='button'
+                          variant='primary'
+                          className='btn btn-block'
+                          onClick={orderStatusHandler}
+                        >
+                          Mark as Out for Delivery
                         </Button>
                       </Row>
                     </ListGroup.Item>
