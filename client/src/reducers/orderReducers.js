@@ -133,3 +133,27 @@ export const orderDeliverReducer = (state = {}, action) => {
       return state;
   }
 };
+
+// Update order status - admin
+export const orderStatusReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'ORDER_STATUS_REQUEST':
+      return {
+        loading: true,
+      };
+    case 'ORDER_STATUS_SUCCESS':
+      return {
+        loading: false,
+        success: true,
+      };
+    case 'ORDER_STATUS_FAIL':
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case 'ORDER_STATUS_RESET':
+      return {};
+    default:
+      return state;
+  }
+};

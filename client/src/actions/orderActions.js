@@ -214,3 +214,35 @@ export const updateOrderToDelivered =
       });
     }
   };
+
+// Update order status - admin
+export const updateOrderStatus = (orderId, userInfo) => async (dispatch) => {
+  try {
+    dispatch({
+      type: 'ORDER_STATUS_REQUEST',
+    });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/orders/status/${orderId}`, config);
+
+    dispatch({
+      type: 'ORDER_STATUS_SUCCESS',
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: 'ORDER_STATUS_FAIL',
+      payload: message,
+    });
+  }
+};
