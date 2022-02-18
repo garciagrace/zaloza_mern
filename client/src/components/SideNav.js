@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const SideNav = (isAdmin) => {
+import { getUserDetails } from '../actions/userActions';
+
+const SideNav = () => {
+  const dispatch = useDispatch();
+
+  const userDetails = useSelector((state) => state.userDetails);
+  const { user } = userDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getUserDetails('profile'));
+    }
+  }, [dispatch, userInfo]);
+
   return (
     <div className='side-nav'>
       <h5>NAVIGATION</h5>
-
-      {isAdmin === true && (
+      {user.isAdmin === true && (
         <>
           <LinkContainer to='/admin/order'>
             <p className='side-nav-link'>Order List</p>
@@ -19,7 +35,6 @@ const SideNav = (isAdmin) => {
           </LinkContainer>
         </>
       )}
-
       <LinkContainer to='/account'>
         <p className='side-nav-link'>My Account</p>
       </LinkContainer>

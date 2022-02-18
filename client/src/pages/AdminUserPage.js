@@ -31,7 +31,7 @@ const AdminUserPage = ({ history }) => {
   return (
     <Row>
       <Col md={3}>
-        <SideNav isAdmin={currentUser.isAdmin} />
+        <SideNav />
       </Col>
       <Col md={9}>
         <>

@@ -36,7 +36,7 @@ const AdminOrderPage = ({ location, history }) => {
   return (
     <Row>
       <Col md={3}>
-        <SideNav isAdmin={user.isAdmin} />
+        <SideNav />
       </Col>
       <Col md={9}>
         <>
