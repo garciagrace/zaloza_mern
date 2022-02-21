@@ -29,4 +29,15 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 });
 
-export { getProductsByCategory, getProductById };
+// @desc    Fetch all products
+// @route   GET /api/products/
+// @access  Private/Admin
+const getAllProducts = asyncHandler(async (req, res) => {
+  const category = req.params.category;
+
+  const products = await Product.find({});
+
+  res.json({ products });
+});
+
+export { getProductsByCategory, getProductById, getAllProducts };
