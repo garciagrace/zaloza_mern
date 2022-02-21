@@ -33,11 +33,9 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   GET /api/products/
 // @access  Private/Admin
 const getAllProducts = asyncHandler(async (req, res) => {
-  const category = req.params.category;
-
   const products = await Product.find({});
 
-  res.json({ products });
+  res.json(products);
 });
 
 export { getProductsByCategory, getProductById, getAllProducts };
