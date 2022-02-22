@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listOrders } from '../actions/orderActions';
 import { getUserDetails } from '../actions/userActions';
+import { numberWithCommas } from '../utilities';
 
 const AdminOrderPage = ({ location, history }) => {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const AdminOrderPage = ({ location, history }) => {
                 <tr>
                   <th>ID</th>
                   <th>DATE</th>
+                  <th>AMOUNT</th>
+                  <th>STATUS</th>
                   <th>PAID</th>
                   <th>DELIVERED</th>
                   <th></th>
@@ -58,6 +61,8 @@ const AdminOrderPage = ({ location, history }) => {
                   <tr key={order._id}>
                     <td>{order._id}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>
+                    <td>P{numberWithCommas(order.totalPrice)}</td>
+                    <td>{order.orderStatus}</td>
                     <td>
                       {order.isPaid ? (
                         order.paidAt.substring(0, 10)

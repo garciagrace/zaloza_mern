@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails } from '../actions/userActions';
 import { listAllProducts } from '../actions/productActions';
+import { numberWithCommas } from '../utilities';
 
 const AdminProductPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const AdminProductPage = ({ history }) => {
                     {products.map((product) => (
                       <tr key={product._id}>
                         <td>{product.name}</td>
-                        <td>P{product.price}</td>
+                        <td>P{numberWithCommas(product.price)}</td>
                         <td>{product.category}</td>
                         <td>
                           <LinkContainer
@@ -76,8 +77,6 @@ const AdminProductPage = ({ history }) => {
                     ))}
                   </tbody>
                 </Table>
-
-                {console.log(products)}
               </>
             )}
           </>
