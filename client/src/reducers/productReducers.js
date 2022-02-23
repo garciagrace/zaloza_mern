@@ -45,3 +45,17 @@ export const productAllReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
+
+// Create product - admin
+export const productCreateReducer = (state = { products: {} }, action) => {
+  switch (action.type) {
+    case 'PRODUCT_CREATE_REQUEST':
+      return { ...state, loading: true };
+    case 'PRODUCT_CREATE_SUCCESS':
+      return { loading: false, products: action.payload };
+    case 'PRODUCT_CREATE_FAIL':
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
