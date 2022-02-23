@@ -38,4 +38,55 @@ const getAllProducts = asyncHandler(async (req, res) => {
   res.json(products);
 });
 
-export { getProductsByCategory, getProductById, getAllProducts };
+// @desc    Create new products
+// @route   POST /api/products
+// @access  Private/Admin
+const createProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    brand,
+    description,
+    category,
+    productType,
+    price,
+    stocks,
+    image,
+  } = req.body;
+
+  const productExists = await Product.findOne({ name, brand });
+
+  if (productExists) {
+    res.status(400);
+    throw new Error('Product already exists');
+  }
+
+  const product = await Product.create({
+    name,
+    brand,
+    description,
+    category,
+    productType,
+    price,
+    stocks,
+    image,
+  });
+
+  if (product) {
+    res.status(201).json({
+      _id: product._id,
+      name: product.name,
+      brand: product.brand,
+      description: product.description,
+      category: product.category,
+      productType: product.productType,
+      price: product.price,
+      stocks: product.stocks,
+      image: product.image,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid product data');
+  }
+});
+
+export { getProductsByCategory, getProductById, getAllProducts, createProduct };
