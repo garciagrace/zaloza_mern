@@ -30,6 +30,10 @@ p {
   margin: 0;
 }
 
+select.form-control {
+  border: none !important;
+}
+
 body {
   font-family: var(--ff-primary);
   font-weight: 300;

@@ -50,9 +50,9 @@ export const productAllReducer = (state = { products: [] }, action) => {
 export const productCreateReducer = (state = { products: {} }, action) => {
   switch (action.type) {
     case 'PRODUCT_CREATE_REQUEST':
-      return { ...state, loading: true };
+      return { loading: true, success: false };
     case 'PRODUCT_CREATE_SUCCESS':
-      return { loading: false, products: action.payload };
+      return { loading: false, success: true, products: action.payload };
     case 'PRODUCT_CREATE_FAIL':
       return { loading: false, error: action.payload };
     default:

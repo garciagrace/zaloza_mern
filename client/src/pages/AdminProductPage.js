@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -46,6 +47,16 @@ const AdminProductPage = ({ history }) => {
               <Message variant='danger'>{error}</Message>
             ) : (
               <>
+                <Row>
+                  <Col className='d-flex justify-content-end'>
+                    <Link
+                      className='btn btn-primary my-3'
+                      to={`/admin/product/new`}
+                    >
+                      <i className='fas fa-plus'></i> Create Product
+                    </Link>
+                  </Col>
+                </Row>
                 <Table striped bordered hover responsive className='table-sm'>
                   <thead>
                     <tr>

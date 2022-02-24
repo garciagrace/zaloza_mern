@@ -20,6 +20,7 @@ import OrderPage from './pages/OrderPage';
 import AdminOrderPage from './pages/AdminOrderPage';
 import AdminUserPage from './pages/AdminUserPage';
 import AdminProductPage from './pages/AdminProductPage';
+import AdminCreateProductPage from './pages/AdminCreateProductPage';
 
 const App = ({ match }) => {
   return (
@@ -54,7 +55,8 @@ const App = ({ match }) => {
           {/* Admin */}
           <Route path='/admin/order' component={AdminOrderPage} />
           <Route path='/admin/user' component={AdminUserPage} />
-          <Route path='/admin/product' component={AdminProductPage} />
+          <Route path='/admin/product' component={AdminProductPage} exact />
+          <Route path='/admin/product/new' component={AdminCreateProductPage} />
         </Container>
       </main>
       <Footer />
