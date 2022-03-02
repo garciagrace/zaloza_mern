@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
@@ -6,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createProduct } from '../actions/productActions';
 import Message from '../components/Message';
+import Loader from '../components/Loader';
 
 const AdminCreateProductPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ const AdminCreateProductPage = ({ history }) => {
   const [stocks, setStocks] = useState([]);
   const [size, setSize] = useState('');
   const [qty, setQty] = useState(0);
+  const [image, setImage] = useState('');
+  const [uploading, setUploading] = useState('');
 
   const productCreate = useSelector((state) => state.productCreate);
   const { success, error } = productCreate;
@@ -30,9 +34,32 @@ const AdminCreateProductPage = ({ history }) => {
     }
   }, [dispatch, history, success]);
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    if (stocks.length !== 0) {
+    if (stocks.length !== 0 && image !== '') {
       dispatch(
         createProduct({
           name,
@@ -42,7 +69,7 @@ const AdminCreateProductPage = ({ history }) => {
           productType,
           price,
           stocks,
-          image: '-',
+          image,
         })
       );
     }
@@ -147,10 +174,13 @@ const AdminCreateProductPage = ({ history }) => {
                   <option key='1' value='Clothing'>
                     Clothing
                   </option>
-                  <option key='2' value='Smallclothes'>
+                  <option key='2' value='Footwear'>
+                    Footwear
+                  </option>
+                  <option key='3' value='Smallclothes'>
                     Smallclothes
                   </option>
-                  <option key='3' value='One Size'>
+                  <option key='4' value='One Size'>
                     One Size
                   </option>
                 </Form.Control>
@@ -198,6 +228,36 @@ const AdminCreateProductPage = ({ history }) => {
                           </option>
                           <option key='5' value='XL'>
                             XL
+                          </option>
+                        </>
+                      ) : productType === 'Footwear' ? (
+                        <>
+                          <option key='1' value='US - 4'>
+                            US - 4
+                          </option>
+                          <option key='2' value='US - 5'>
+                            US - 5
+                          </option>
+                          <option key='3' value='US - 6'>
+                            US - 6
+                          </option>
+                          <option key='4' value='US - 7'>
+                            US - 7
+                          </option>
+                          <option key='5' value='US - 8'>
+                            US - 8
+                          </option>
+                          <option key='6' value='US - 9'>
+                            US - 9
+                          </option>
+                          <option key='7' value='US - 10'>
+                            US - 10
+                          </option>
+                          <option key='8' value='US - 11'>
+                            US - 11
+                          </option>
+                          <option key='9' value='US - 12'>
+                            US - 12
                           </option>
                         </>
                       ) : productType === 'Smallclothes' ? (
@@ -276,6 +336,17 @@ const AdminCreateProductPage = ({ history }) => {
                   )}
                 </Col>
               </Row>
+
+              <Form.Group controlId='image' className='mt-3'>
+                <Form.Label>Image</Form.Label>
+                <Form.File
+                  id='image-file'
+                  accept='.png, .jpg, .jpeg'
+                  custom
+                  onChange={uploadFileHandler}
+                ></Form.File>
+                {uploading && <Loader />}
+              </Form.Group>
 
               <hr />
 
