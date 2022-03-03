@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails } from '../actions/userActions';
-import { listAllProducts } from '../actions/productActions';
+import { listAllProducts, deleteProduct } from '../actions/productActions';
 import { numberWithCommas } from '../utilities';
 
 const AdminProductPage = ({ history }) => {
@@ -21,17 +21,30 @@ const AdminProductPage = ({ history }) => {
   const productList = useSelector((state) => state.productAll);
   const { loading, products, error } = productList;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const { success } = productDelete;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     } else {
       if (!user || !user.email) {
         dispatch(getUserDetails('profile'));
-      } else if (userInfo && user.isAdmin) {
+      } else if ((userInfo && user.isAdmin) || success) {
+        dispatch(listAllProducts());
+      }
+
+      if (success) {
         dispatch(listAllProducts());
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, success]);
+
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteProduct(id));
+    }
+  };
 
   return (
     <>
@@ -80,7 +93,11 @@ const AdminProductPage = ({ history }) => {
                               <i className='fas fa-edit'></i>
                             </Button>
                           </LinkContainer>
-                          <Button variant='danger' className='btn-sm'>
+                          <Button
+                            variant='danger'
+                            className='btn-sm'
+                            onClick={() => deleteHandler(product._id)}
+                          >
                             <i className='fas fa-trash'></i>
                           </Button>
                         </td>
