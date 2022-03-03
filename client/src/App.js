@@ -21,6 +21,7 @@ import AdminOrderPage from './pages/AdminOrderPage';
 import AdminUserPage from './pages/AdminUserPage';
 import AdminProductPage from './pages/AdminProductPage';
 import AdminCreateProductPage from './pages/AdminCreateProductPage';
+import AdminUpdateProductPage from './pages/AdminUpdateProductPage';
 
 const App = ({ match }) => {
   return (
@@ -57,6 +58,11 @@ const App = ({ match }) => {
           <Route path='/admin/user' component={AdminUserPage} />
           <Route path='/admin/product' component={AdminProductPage} exact />
           <Route path='/admin/product/new' component={AdminCreateProductPage} />
+          <Route
+            path='/admin/product/:category/:id/edit'
+            component={AdminUpdateProductPage}
+            exact
+          />
         </Container>
       </main>
       <Footer />

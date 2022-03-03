@@ -27,6 +27,8 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       return { loading: false, product: action.payload };
     case 'PRODUCT_DETAILS_FAIL':
       return { loading: false, error: action.payload };
+    case 'PRODUCT_DETAILS_RESET':
+      return { product: {} };
     default:
       return state;
   }
@@ -69,6 +71,8 @@ export const productUpdateReducer = (state = { product: {} }, action) => {
       return { loading: false, success: true, product: action.payload };
     case 'PRODUCT_UPDATE_FAIL':
       return { loading: false, error: action.payload };
+    case 'PRODUCT_UPDATE_RESET':
+      return { success: false, product: {} };
     default:
       return state;
   }
