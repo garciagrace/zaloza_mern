@@ -45,26 +45,28 @@ export const listProductDetails = (category, id) => async (dispatch) => {
 };
 
 // Get all products - admin
-export const listAllProducts = () => async (dispatch) => {
-  try {
-    dispatch({ type: 'PRODUCT_LIST_ALL_REQUEST' });
+export const listAllProducts =
+  (keyword = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: 'PRODUCT_LIST_ALL_REQUEST' });
 
-    const { data } = await axios.get(`/api/products/`);
+      const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
-    dispatch({
-      type: 'PRODUCT_LIST_ALL_SUCCESS',
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: 'PRODUCT_LIST_ALL_FAIL',
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: 'PRODUCT_LIST_ALL_SUCCESS',
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'PRODUCT_LIST_ALL_FAIL',
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 // Create product - admin
 export const createProduct = (product) => async (dispatch, getState) => {

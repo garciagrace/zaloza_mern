@@ -22,6 +22,7 @@ import AdminUserPage from './pages/AdminUserPage';
 import AdminProductPage from './pages/AdminProductPage';
 import AdminCreateProductPage from './pages/AdminCreateProductPage';
 import AdminUpdateProductPage from './pages/AdminUpdateProductPage';
+import ProductListPage from './pages/ProductListPage';
 
 const App = ({ match }) => {
   return (
@@ -29,6 +30,7 @@ const App = ({ match }) => {
       <Header />
       <main className='py-3'>
         <Container className='wrapper'>
+          <Route path='/search/:keyword' component={ProductListPage} exact />
           <Route path='/' component={HomePage} exact />
           {/* User */}
           <Route path='/login' component={LoginPage} />
